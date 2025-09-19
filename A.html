@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>班级组织宣传中心</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #4e54c8;
+            --secondary: #8f94fb;
+            --accent: #ff7e5f;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+        }
+        
+        body {
+            background: linear-gradient(to right, #fdfbfb, #ebedee);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 25px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        /* 英雄区域样式 */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(rgba(78, 84, 200, 0.8), rgba(143, 148, 251, 0.8)), url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+            color: white;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 40px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #ff6b4c;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 内容区域样式 */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+        
+        .features {
+            padding: 60px 0;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        /* 修改后的活动展示区样式 */
+        .activities {
+            padding: 60px 0;
+            background-color: #f8f9fa;
+        }
+        
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .activity-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .activity-img-container {
+            position: relative;
+            width: 100%;
+            height: 200px; /* 固定高度，可根据需要调整 */
+            overflow: hidden;
+        }
+        
+        .activity-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 关键属性：确保图片覆盖整个区域 */
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .activity-card:hover .activity-img {
+            transform: scale(1.05);
+        }
+        
+        .activity-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .activity-content h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .activity-content p {
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        
+        /* 成员风采 */
+        .members {
+            padding: 60px 0;
+        }
+        
+        .member-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .member-card {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .member-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 5px solid var(--light);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 通知区域 */
+        .notices {
+            padding: 60px 0;
+            background-color: #f8f9fa;
+        }
+        
+        .notice-board {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .notice-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .notice-item:last-child {
+            border-bottom: none;
+        }
+        
+        .notice-date {
+            color: var(--accent);
+            font-weight: 600;
+            margin-right: 10px;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+        
+        .footer-section p {
+            margin-bottom: 15px;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--accent);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .activity-img-container {
+                height: 180px; /* 移动端调整高度 */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .activity-img-container {
+                height: 160px; /* 小屏幕设备调整高度 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>24级中欧一班</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">主题班会</a></li>
+                    <li><a href="#">班级活动</a></li>
+                    <li><a href="#">班级相册</a></li>
+                    <li><a href="#">通知公告</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>欢迎来到中欧一班大家庭</h1>
+            <p>明德至善，弘毅兴邦</p>
+            <a href="#" class="btn">了解更多</a>
+        </div>
+    </section>
+
+    <!-- 功能特点 -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">班级特色</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-users"></i>
+                    <h3></h3>
+                    <p></p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3></h3>
+                    <p></p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-book-open"></i>
+                    <h3></h3>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 活动展示 -->
+    <section class="activities">
+        <div class="container">
+            <h2 class="section-title">近期活动</h2>
+            <div class="activity-grid">
+                <div class="activity-card">
+                    <div class="activity-img-container">
+                        <!-- 替换为您的本地图片路径 -->
+                        <img src="image/1.png" alt="春季运动会" class="activity-img">
+                    </div>
+                    <div class="activity-content">
+                        <h3>暑期主题班会</h3>
+                        <p>中国民航大学第三次党代会学习</p>
+                        <a href="#" class="btn" style="margin-top: auto;">查看详情</a>
+                    </div>
+                </div>
+                <div class="activity-card">
+                    <div class="activity-img-container">
+                        <!-- 替换为您的本地图片路径 -->
+                        <img src="image/3.jpg" alt="科技文化节" class="activity-img">
+                    </div>
+                    <div class="activity-content">
+                        <h3>九三阅兵</h3>
+                        <p>多国领导人赞叹的非凡盛会</p>
+                        <a href="#" class="btn" style="margin-top: auto;">查看详情</a>
+                    </div>
+                </div>
+                <div class="activity-card">
+                    <div class="activity-img-container">
+                        <!-- 替换为您的本地图片路径 -->
+                        <img src="image/2.jpg" alt="志愿者活动" class="activity-img">
+                    </div>
+                    <div class="activity-content">
+                        <h3>开学季主题班级活动</h3>
+                        <p></p>
+                        <a href="#" class="btn" style="margin-top: auto;">查看详情</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 通知公告 -->
+    <section class="notices">
+        <div class="container">
+            <h2 class="section-title">通知公告</h2>
+            <div class="notice-board">
+                <div class="notice-item">
+                    <span class="notice-date">2025-9-18</span>
+                    <span>近期将开展2025——2026学年家庭经济困难认定</span>
+                </div>
+                <div class="notice-item">
+                    <span class="notice-date">2025-9-18</span>
+                    <span>近期将开展获奖情况的征集</span>
+                </div>
+                <div class="notice-item">
+                    <span class="notice-date">2025-9-19</span>
+                    <span>下周要完成物理TD1 3,4,5 TD2 1,2,3,4</span>
+                </div>
+                <div class="notice-item">
+                    <span class="notice-date">2025-9-19</span>
+                    <span>明德杯大学生思政竞赛</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 24级中欧一班 所有权利 </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const featureCards = document.querySelectorAll('.feature-card');
+            
+            featureCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.1)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.05)';
+                });
+            });
+            
+
+            setInterval(() => {
+                const notices = document.querySelector('.notice-board');
+                notices.style.transform = 'scale(1.01)';
+                setTimeout(() => {
+                    notices.style.transform = 'scale(1)';
+                }, 200);
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
